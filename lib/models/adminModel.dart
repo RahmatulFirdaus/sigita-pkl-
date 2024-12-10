@@ -114,7 +114,7 @@ class UpdatePostinganAdmin {
 
   static Future<UpdatePostinganAdmin> updatePostinganAdmin(
       String id, String judul, String file, String deskripsi) async {
-    Uri url = Uri.parse("http://4c52-180-254-138-210.ngrok-free.app/api/updatePostingan/$id");
+    Uri url = Uri.parse("https://4c52-180-254-138-210.ngrok-free.app/api/updatePostingan/$id");
     var hasilResponse = await http.patch(url, body: {
       "judul": judul,
       "file": file,
@@ -135,7 +135,7 @@ class UpdateKategoriAdmin {
 
   static Future<UpdateKategoriAdmin> updateKategoriAdmin(
       String id, String kategori) async {
-    Uri url = Uri.parse("http://4c52-180-254-138-210.ngrok-free.app/api/updateKategori/$id");
+    Uri url = Uri.parse("https://4c52-180-254-138-210.ngrok-free.app/api/updateKategori/$id");
     var hasilResponse = await http.patch(url, body: {"kategori": kategori});
     var jsonData = jsonDecode(hasilResponse.body);
     return UpdateKategoriAdmin(kategori: jsonData['kategori'].toString());
@@ -150,7 +150,7 @@ class DeletePostinganAdmin {
   });
 
   static Future<DeletePostinganAdmin> deletePostinganAdmin(String id) async {
-    Uri url = Uri.parse("http://4c52-180-254-138-210.ngrok-free.app/api/deletePostingan/$id");
+    Uri url = Uri.parse("https://4c52-180-254-138-210.ngrok-free.app/api/deletePostingan/$id");
     var hasilResponse = await http.delete(url);
     var jsonData = jsonDecode(hasilResponse.body);
     return DeletePostinganAdmin(id: jsonData['id'].toString());
@@ -165,7 +165,7 @@ class DeleteKategoriAdmin {
   });
 
   static Future<DeleteKategoriAdmin> deleteKategoriAdmin(String id) async {
-    Uri url = Uri.parse("http://4c52-180-254-138-210.ngrok-free.app/api/deleteKategori/$id");
+    Uri url = Uri.parse("https://4c52-180-254-138-210.ngrok-free.app/api/deleteKategori/$id");
     var hasilResponse = await http.delete(url);
     var jsonData = jsonDecode(hasilResponse.body);
     return DeleteKategoriAdmin(id: jsonData['id'].toString());
