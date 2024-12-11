@@ -7,7 +7,8 @@ import 'package:sigita_test/navigasi/navigasiBar.dart';
 import 'package:intl/intl.dart';
 
 class Kesehatanpage extends StatefulWidget {
-  const Kesehatanpage({super.key});
+  String id;
+  Kesehatanpage({super.key, required this.id});
 
   @override
   State<Kesehatanpage> createState() => _KesehatanpageState();
@@ -15,7 +16,6 @@ class Kesehatanpage extends StatefulWidget {
 
 class _KesehatanpageState extends State<Kesehatanpage> {
   List<GetSigita> dataRespon = [];
-  List<GetKategori> dataKategori = [];
   List<GetSigita> filteredDataRespon = [];
   TextEditingController searchController = TextEditingController();
 
@@ -28,11 +28,7 @@ class _KesehatanpageState extends State<Kesehatanpage> {
         filteredDataRespon = value;
       });
     });
-    GetKategori.getKategori().then((nilai) {
-      setState(() {
-        dataKategori = nilai;
-      });
-    });
+
   }
 
   void filterSearchResults(String query) {

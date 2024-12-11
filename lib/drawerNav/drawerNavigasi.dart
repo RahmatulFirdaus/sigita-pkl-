@@ -18,14 +18,14 @@ class Drawernavigasi extends StatefulWidget {
 
 class _DrawernavigasiState extends State<Drawernavigasi> {
   List<GetKategori> dataKategori = [];
-  List pageList = [
-    {"halaman": const Kesehatanpage()},
-    {"halaman": const Masyarakatpage()},
-    {"halaman": const Etikapage()},
-    {"halaman": const Peraturanpage()},
+  List<Map<String, dynamic>> pageList = [
+    {"builder": (String id) => Kesehatanpage(id: id)},
+    {"builder": (String id) => Masyarakatpage(id: id)},
+    {"builder": (String id) => Etikapage(id: id)},
+    {"builder": (String id) => Peraturanpage(id: id)},
   ];
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   @override
   void initState() {
@@ -78,7 +78,6 @@ class _DrawernavigasiState extends State<Drawernavigasi> {
               title: const Text("Topik", style: TextStyle(fontSize: 14)),
               children: dataKategori.map((kategori) {
                 return Container(
-                  // color: Colors.red,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: ListTile(
                     leading: const Icon(
@@ -94,10 +93,14 @@ class _DrawernavigasiState extends State<Drawernavigasi> {
                     onTap: () {
                       _selectedIndex = dataKategori.indexOf(kategori);
                       Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  pageList[_selectedIndex]['halaman']));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              pageList[_selectedIndex]['builder'](
+                                kategori.id, // Mengirimkan id sebagai parameter
+                              ),
+                        ),
+                      );
                     },
                   ),
                 );
@@ -139,3 +142,4 @@ class _DrawernavigasiState extends State<Drawernavigasi> {
     );
   }
 }
+
