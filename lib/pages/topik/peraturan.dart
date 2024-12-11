@@ -22,7 +22,7 @@ class _PeraturanpageState extends State<Peraturanpage> {
   @override
   void initState() {
     super.initState();
-    GetSigita.connApi().then((value) {
+    GetSigita.connApi(widget.id).then((value) {
       setState(() {
         dataRespon = value;
         filteredDataRespon = value;

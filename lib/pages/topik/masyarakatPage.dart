@@ -22,7 +22,7 @@ class _MasyarakatpageState extends State<Masyarakatpage> {
   @override
   void initState() {
     super.initState();
-    GetSigita.connApi().then((value) {
+    GetSigita.connApi(widget.id).then((value) {
       setState(() {
         dataRespon = value;
         filteredDataRespon = value;

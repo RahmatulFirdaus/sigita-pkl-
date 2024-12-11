@@ -102,7 +102,7 @@ class _AddPostinganState extends State<AddPostingan> {
   }) async {
     if (_file == null) return;
 
-    var uri = Uri.parse("https://dfab-180-254-138-210.ngrok-free.app/api/uploadFileAdmin");
+    var uri = Uri.parse("https://192.168.1.70:3000/api/uploadFileAdmin");
     var request = http.MultipartRequest('POST', uri);
 
     // Tambahkan file ke dalam request

@@ -97,7 +97,7 @@ class _DrawernavigasiState extends State<Drawernavigasi> {
                         MaterialPageRoute(
                           builder: (context) =>
                               pageList[_selectedIndex]['builder'](
-                                kategori.id, // Mengirimkan id sebagai parameter
+                                kategori.id, 
                               ),
                         ),
                       );
