@@ -6,15 +6,15 @@ import 'package:sigita_test/pages/secondPageKesehatan.dart';
 import 'package:sigita_test/navigasi/navigasiBar.dart';
 import 'package:intl/intl.dart';
 
-class Masyarakatpage extends StatefulWidget {
+class Topikpage extends StatefulWidget {
   String id;
-  Masyarakatpage({super.key, required this.id});
+  Topikpage({super.key, required this.id});
 
   @override
-  State<Masyarakatpage> createState() => _MasyarakatpageState();
+  State<Topikpage> createState() => _TopikpageState();
 }
 
-class _MasyarakatpageState extends State<Masyarakatpage> {
+class _TopikpageState extends State<Topikpage> {
   List<GetSigita> dataRespon = [];
   List<GetSigita> filteredDataRespon = [];
   TextEditingController searchController = TextEditingController();
@@ -28,7 +28,6 @@ class _MasyarakatpageState extends State<Masyarakatpage> {
         filteredDataRespon = value;
       });
     });
-
   }
 
   void filterSearchResults(String query) {
@@ -90,21 +89,56 @@ class _MasyarakatpageState extends State<Masyarakatpage> {
               ),
             ),
             Expanded(
-              child: filteredDataRespon.isNotEmpty
-                  ? ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      itemCount: filteredDataRespon.length,
-                      itemBuilder: (context, index) =>
-                          _buildHealthCard(filteredDataRespon[index]),
-                    )
-                  : const Center(
-                      child: SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                    ),
-            ),
+                child: filteredDataRespon.isNotEmpty
+                    ? ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        itemCount: filteredDataRespon.length,
+                        itemBuilder: (context, index) =>
+                            _buildHealthCard(filteredDataRespon[index]),
+                      )
+                    : Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.white,
+                              Color.fromRGBO(202, 248, 253, 1),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                        ),
+                        child: Center(
+                            child: Container(
+                          width: 300,
+                          height: 200,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  spreadRadius: 1,
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ]),
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.emoji_emotions,
+                                size: 70,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Maaf ya! Postingan Tidak Tersedia",
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        )))),
           ],
         ),
       ),

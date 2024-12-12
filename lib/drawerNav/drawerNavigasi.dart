@@ -4,10 +4,9 @@ import 'package:sigita_test/adminpage/loginAdmin.dart';
 import 'package:sigita_test/pages/dashboard.dart';
 import 'package:sigita_test/models/sigitaModel.dart';
 import 'package:sigita_test/pages/faqPage.dart';
-import 'package:sigita_test/pages/topik/etikaPage.dart';
-import 'package:sigita_test/pages/topik/peraturan.dart';
-import 'package:sigita_test/pages/topik/kesehatanPage.dart';
-import 'package:sigita_test/pages/topik/masyarakatPage.dart';
+
+import 'package:sigita_test/pages/topik/topik_page.dart';
+
 
 class Drawernavigasi extends StatefulWidget {
   const Drawernavigasi({super.key});
@@ -18,12 +17,6 @@ class Drawernavigasi extends StatefulWidget {
 
 class _DrawernavigasiState extends State<Drawernavigasi> {
   List<GetKategori> dataKategori = [];
-  List<Map<String, dynamic>> pageList = [
-    {"builder": (String id) => Kesehatanpage(id: id)},
-    {"builder": (String id) => Masyarakatpage(id: id)},
-    {"builder": (String id) => Etikapage(id: id)},
-    {"builder": (String id) => Peraturanpage(id: id)},
-  ];
 
   int _selectedIndex = 1;
 
@@ -96,9 +89,7 @@ class _DrawernavigasiState extends State<Drawernavigasi> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              pageList[_selectedIndex]['builder'](
-                                kategori.id, 
-                              ),
+                              Topikpage(id: dataKategori[_selectedIndex].id),
                         ),
                       );
                     },
