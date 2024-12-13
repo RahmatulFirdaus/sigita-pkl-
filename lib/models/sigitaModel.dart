@@ -1,6 +1,27 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class LoginSigita{
+  String username, password;
+
+  LoginSigita({required this.username, required this.password});
+
+  Future<LoginSigita> login() async {
+    Uri url = Uri.parse("http://192.168.1.70:3000/api/login");
+    var hasilResponse = await http.post(url,
+    headers: {"Content-Type": "application/json"},
+     body: {
+      "username": username,
+      "password": password,
+    });
+    var jsonData = jsonDecode(hasilResponse.body);
+    return LoginSigita(
+      username: jsonData['username'].toString(),
+      password: jsonData['password'].toString(),
+    );
+  }
+}
+
 class GetSigita {
   String id, title, content, date, category, jumlah, file, idKategori;
 
@@ -65,7 +86,7 @@ class PostSigita {
 
   static Future<PostSigita> postSigita(
       String idPostingan, String email, String komentar) async {
-    Uri url = Uri.parse("https://192.168.1.70:3000/api/simpanKomentar");
+    Uri url = Uri.parse("http://192.168.1.70:3000/api/simpanKomentar");
     var hasilResponse = await http.post(
       url,
       body: {
@@ -107,7 +128,7 @@ class PermissionFile {
 
   static Future<PermissionFile> postDownload(
       String idPostingan, String email) async {
-    Uri url = Uri.parse("https://192.168.1.70:3000/api/downloadModul");
+    Uri url = Uri.parse("http://192.168.1.70:3000/api/downloadModul");
     var hasilResponse = await http.post(
       url,
       body: {

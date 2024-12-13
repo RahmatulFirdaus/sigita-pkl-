@@ -167,7 +167,7 @@ class _AddKategoriState extends State<AddKategori> {
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: const Text("Gagal menyimpan data"),
+                                content: Text("Gagal menyimpan data : $e"),
                                 backgroundColor: Colors.red,
                                 behavior: SnackBarBehavior.floating,
                                 shape: RoundedRectangleBorder(

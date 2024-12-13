@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sigita_test/models/sigitaModel.dart';
 import 'package:toastification/toastification.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,13 +12,14 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  LoginSigita loginSigita = LoginSigita(username: '', password: '');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        // physics: const NeverScrollableScrollPhysics(),
+        // physics: const NeverScrollabljaeScrollPhysics(),
         child: Stack(
           children: [
             // Decorative circles
