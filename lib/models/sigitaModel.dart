@@ -4,15 +4,38 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const storage = FlutterSecureStorage();
 
-class GetUser{
-  Future<String?> getUser() async {
+class GetUser {
+  String name;
+  String department;
+  String phone;
+
+  GetUser({
+    required this.name,
+    required this.department,
+    required this.phone,
+  });
+
+  static Future<GetUser> getUser() async {
     var url = Uri.parse("http://192.168.1.70:3000/api/nurse");
-    var hasilResponse = await http.get(url);
-    var jsonData = jsonDecode(hasilResponse.body);
-    var user = jsonData["data"][0];
-    return user;
+    var hasilResponse = await http.get(url,
+        headers: {'Authorization': 'Bearer ${await storage.read(key: 'token')}'});
+    
+    // Pastikan response berhasil
+    if (hasilResponse.statusCode == 200) {
+      var jsonData = jsonDecode(hasilResponse.body);
+      var user = jsonData["data"][0]; // Ambil data user pertama
+
+      return GetUser(
+        name: user['name'],
+        department: user['department'],
+        phone: user['phone'],
+      );
+    } else {
+      throw Exception('Failed to load user data');
+    }
   }
 }
+
 
 class LoginSigita {
   static Future<String?> login(String username, String password) async {

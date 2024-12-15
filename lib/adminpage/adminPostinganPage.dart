@@ -471,6 +471,18 @@ class MyDataSource extends DataTableSource {
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
+                icon: Icon(Icons.remove_red_eye, color: Colors.yellow[700]),
+                tooltip: 'View Postingan',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UpdatePostingan(id: postingan.id),
+                    ),
+                  );
+                },
+              ),
+              IconButton(
                 icon: Icon(Icons.edit, color: Colors.blue[700]),
                 tooltip: 'Edit Postingan',
                 onPressed: () {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sigita_test/adminpage/adminAccountPage.dart';
 import 'package:sigita_test/adminpage/adminKategoriPage.dart';
 import 'package:sigita_test/adminpage/adminMainPage.dart';
 import 'package:sigita_test/adminpage/adminPostinganPage.dart';
@@ -41,6 +42,10 @@ class _GetxcontrollerpageState extends State<Getxcontrollerpage> {
                 icon: Icon(Icons.polyline),
                 label: "Kategori",
               ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.supervisor_account_rounded),
+                label: "Account",
+              ),
             ],
           ),
         ));
@@ -53,7 +58,8 @@ class NavigationController extends GetxController {
   final List<Widget> screen = [
     const Adminmainpage(),
     const Adminpostinganpage(),
-    const Adminkategoripage()
+    const Adminkategoripage(),
+    const Adminaccountpage()
   ];
 
   void updateIndex(int index) {
