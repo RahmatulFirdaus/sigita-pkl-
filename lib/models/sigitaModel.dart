@@ -1,26 +1,37 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';  
 
-class LoginSigita{
-  String username, password;
+const storage = FlutterSecureStorage();
 
-  LoginSigita({required this.username, required this.password});
+class LoginSigita {
+  static Future<String?> login(String username, String password) async {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.70:3000/api/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'username': username, 'password': password}),
+      );
+    try {
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final String token = data['data']['token'];
+        final String role = data['data']['role'];
 
-  Future<LoginSigita> login() async {
-    Uri url = Uri.parse("http://192.168.1.70:3000/api/login");
-    var hasilResponse = await http.post(url,
-    headers: {"Content-Type": "application/json"},
-     body: {
-      "username": username,
-      "password": password,
-    });
-    var jsonData = jsonDecode(hasilResponse.body);
-    return LoginSigita(
-      username: jsonData['username'].toString(),
-      password: jsonData['password'].toString(),
-    );
+        // Simpan token ke storage
+        await storage.write(key: 'token', value: token);
+
+        return role;
+      } else {
+        final errorMessage = jsonDecode(response.body)['pesan'];
+        return errorMessage;
+      }
+    } catch (e) {
+      final errorMessage = jsonDecode(response.body)['pesan'];
+        return errorMessage;
+    }
   }
 }
+
 
 class GetSigita {
   String id, title, content, date, category, jumlah, file, idKategori;

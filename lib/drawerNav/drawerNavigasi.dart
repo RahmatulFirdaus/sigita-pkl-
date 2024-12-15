@@ -113,10 +113,10 @@ class _DrawernavigasiState extends State<Drawernavigasi> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.admin_panel_settings_outlined,
+            leading: const Icon(Icons.account_box_outlined,
                 color: Colors.black),
             title: Text(
-              "Admin Section",
+              "Profile",
               style: GoogleFonts.poppins(
                 textStyle: const TextStyle(fontSize: 14),
               ),

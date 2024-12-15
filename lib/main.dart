@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sigita_test/pages/login/login_page.dart';
 import 'package:sigita_test/pages/splash_screen.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(textTheme: GoogleFonts.comfortaaTextTheme()),
       title: "Sigita",
       // theme: ThemeData.light(),
-      home: const OpeningSplashScreen(),
+      home: const LoginPage(),
     );
   }
 }

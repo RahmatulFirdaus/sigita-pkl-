@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sigita_test/adminpage/getXController.dart';
 import 'package:sigita_test/models/sigitaModel.dart';
+import 'package:sigita_test/pages/dashboard.dart';
 import 'package:toastification/toastification.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,7 +14,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  LoginSigita loginSigita = LoginSigita(username: '', password: '');
 
   @override
   Widget build(BuildContext context) {
@@ -150,58 +151,75 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () async {
                               if (usernameController.text.isNotEmpty &&
                                   passwordController.text.isNotEmpty) {
-                                // try {
-                                //   // String? result = await authService.login(
-                                //   //     usernameController.text,
-                                //   //     passwordController.text);
+                                try {
+                                  String? result = await LoginSigita.login(
+                                    usernameController.text,
+                                    passwordController.text,
+                                  );
 
-                                //   if (result == null) {
-                                //     toastification.show(
-                                //       context: context,
-                                //       title: const Text("Login Berhasil"),
-                                //       description: const Text(
-                                //           "Selamat Datang Di SIGITA"),
-                                //       type: ToastificationType.success,
-                                //       style: ToastificationStyle.flat,
-                                //       alignment: Alignment.topCenter,
-                                //       autoCloseDuration:
-                                //           const Duration(seconds: 5),
-                                //       icon: const Icon(Icons.check),
-                                //     );
-                                //     Navigator.of(context).pushReplacement(
-                                //       MaterialPageRoute(
-                                //         builder: (context) => Dashboard(
-                                //           username: usernameController.text,
-                                //           password: passwordController.text,
-                                //         ),
-                                //       ),
-                                //     );
-                                //   } else {
-                                //     toastification.show(
-                                //       context: context,
-                                //       title: const Text("Login Gagal"),
-                                //       description: Text(result),
-                                //       type: ToastificationType.error,
-                                //       style: ToastificationStyle.flat,
-                                //       alignment: Alignment.topCenter,
-                                //       autoCloseDuration:
-                                //           const Duration(seconds: 5),
-                                //       icon: const Icon(Icons.error_outline),
-                                //     );
-                                //   }
-                                // } catch (e) {
-                                //   toastification.show(
-                                //     context: context,
-                                //     title: const Text("Login Gagal"),
-                                //     description: Text("Terjadi Kesalahan: $e"),
-                                //     type: ToastificationType.error,
-                                //     style: ToastificationStyle.flat,
-                                //     alignment: Alignment.topCenter,
-                                //     autoCloseDuration:
-                                //         const Duration(seconds: 5),
-                                //     icon: const Icon(Icons.error_outline),
-                                //   );
-                                // }
+                                  if (result == "admin") {
+                                    await toastification.show(
+                                      context: context,
+                                      title: const Text("Login Berhasil"),
+                                      description: const Text(
+                                          "Selamat Datang Di SIGITA"),
+                                      type: ToastificationType.success,
+                                      style: ToastificationStyle.flat,
+                                      alignment: Alignment.topCenter,
+                                      autoCloseDuration:
+                                          const Duration(seconds: 5),
+                                      icon: const Icon(Icons.check),
+                                    );
+                                    await Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Getxcontrollerpage()),
+                                    );
+                                  } else if (result == "perawat") {
+                                    await toastification.show(
+                                      context: context,
+                                      title: const Text("Login Berhasil"),
+                                      description: const Text(
+                                          "Selamat Datang Di SIGITA"),
+                                      type: ToastificationType.success,
+                                      style: ToastificationStyle.flat,
+                                      alignment: Alignment.topCenter,
+                                      autoCloseDuration:
+                                          const Duration(seconds: 5),
+                                      icon: const Icon(Icons.check),
+                                    );
+                                    await Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DashboardPage()),
+                                    );
+                                  } else {
+                                    toastification.show(
+                                      context: context,
+                                      title: const Text("Login Gagal"),
+                                      description: Text(
+                                          result!),
+                                      type: ToastificationType.error,
+                                      style: ToastificationStyle.flat,
+                                      alignment: Alignment.topCenter,
+                                      autoCloseDuration:
+                                          const Duration(seconds: 5),
+                                      icon: const Icon(Icons.error_outline),
+                                    );
+                                  }
+                                } catch (e) {
+                                  toastification.show(
+                                    context: context,
+                                    title: const Text("Login Gagal"),
+                                    description: Text("Terjadi kesalahan: $e"),
+                                    type: ToastificationType.error,
+                                    style: ToastificationStyle.flat,
+                                    alignment: Alignment.topCenter,
+                                    autoCloseDuration:
+                                        const Duration(seconds: 5),
+                                    icon: const Icon(Icons.error_outline),
+                                  );
+                                }
                               } else {
                                 toastification.show(
                                   context: context,
@@ -216,20 +234,7 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               }
                             },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue.withOpacity(0.8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            child: const Text("Login"),
                           ),
                         )
                       ],
