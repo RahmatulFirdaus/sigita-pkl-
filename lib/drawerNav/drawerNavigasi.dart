@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sigita_test/adminpage/loginAdmin.dart';
+import 'package:sigita_test/pages/profile.dart';
 import 'package:sigita_test/pages/dashboard.dart';
 import 'package:sigita_test/models/sigitaModel.dart';
 import 'package:sigita_test/pages/faqPage.dart';
@@ -113,7 +113,7 @@ class _DrawernavigasiState extends State<Drawernavigasi> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.account_box_outlined,
+            leading: const Icon(Icons.account_circle_outlined,
                 color: Colors.black),
             title: Text(
               "Profile",
@@ -125,7 +125,7 @@ class _DrawernavigasiState extends State<Drawernavigasi> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const Loginadminpage()));
+                      builder: (context) => const Profilepage()));
             },
           ),
         ],

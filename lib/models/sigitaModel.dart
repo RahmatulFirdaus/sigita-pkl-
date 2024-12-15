@@ -4,6 +4,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const storage = FlutterSecureStorage();
 
+class GetUser{
+  Future<String?> getUser() async {
+    var url = Uri.parse("http://192.168.1.70:3000/api/nurse");
+    var hasilResponse = await http.get(url);
+    var jsonData = jsonDecode(hasilResponse.body);
+    var user = jsonData["data"][0];
+    return user;
+  }
+}
+
 class LoginSigita {
   static Future<String?> login(String username, String password) async {
       final response = await http.post(
