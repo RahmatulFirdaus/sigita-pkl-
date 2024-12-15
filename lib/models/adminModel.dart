@@ -2,6 +2,29 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class GetAccount{
+  String username, password, role, phone, name, department;
+
+  GetAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department});
+
+  static Future<List<GetAccount>> getAccount() async {
+    Uri url = Uri.parse("http://192.168.1.70:3000/api/getAccountAdmin");
+    var hasilResponse = await http.get(url);
+    var jsonData = jsonDecode(hasilResponse.body);
+    var dataList = jsonData["data"] as List;
+    return dataList.map((user) {
+      return GetAccount(
+        username: user['username'].toString(),
+        password: user['password'].toString(),
+        role: user['role'].toString(),
+        phone: user['phone'].toString(),
+        name: user['nurse_name'].toString(),
+        department: user['department'].toString(),
+      );
+    }).toList();
+  }
+}
+
 class Adminmodel {
   String judul;
   IconData ikon;

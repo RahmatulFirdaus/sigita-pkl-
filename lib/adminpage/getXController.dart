@@ -59,7 +59,7 @@ class NavigationController extends GetxController {
     const Adminmainpage(),
     const Adminpostinganpage(),
     const Adminkategoripage(),
-    const Adminaccountpage()
+    const AdminAccountPage()
   ];
 
   void updateIndex(int index) {
