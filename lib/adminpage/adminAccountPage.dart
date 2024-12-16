@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sigita_test/adminpage/edit_page/account.dart';
 import 'package:sigita_test/adminpage/tambah_page/tambah_account.dart';
 import 'package:sigita_test/models/adminModel.dart';
 import 'package:open_file/open_file.dart';
@@ -450,12 +451,12 @@ class MyDataSource extends DataTableSource {
               IconButton(
                 icon: const Icon(Icons.edit, color: Colors.blue),
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => EditAccount(id: account.id),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Updatepage(id: account.id),
+                    ),
+                  );
                 },
               ),
               IconButton(
@@ -487,24 +488,24 @@ class MyDataSource extends DataTableSource {
             ),
             child: const Text('Hapus'),
             onPressed: () async {
-              // try {
-              //   await DeleteAccount.deleteAccount(account.id);
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //     const SnackBar(
-              //       content: Text('Akun berhasil dihapus'),
-              //       backgroundColor: Colors.green,
-              //     ),
-              //   );
-              //   await onRefresh();
-              // } catch (e) {
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //     SnackBar(
-              //       content: Text('Error: ${e.toString()}'),
-              //       backgroundColor: Colors.red,
-              //     ),
-              //   );
-              // }
-              // Navigator.pop(context);
+              try {
+                await DeleteAccountAdmin.deleteAccountAdmin(account.id);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Akun berhasil dihapus'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+                await onRefresh();
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Error: ${e.toString()}'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+              Navigator.pop(context);
             },
           ),
         ],

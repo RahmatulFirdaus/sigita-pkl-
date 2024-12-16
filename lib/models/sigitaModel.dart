@@ -26,7 +26,7 @@ class GetUser {
       var user = jsonData["data"][0]; // Ambil data user pertama
 
       return GetUser(
-        name: user['name'],
+        name: user['name'].toString(),
         department: user['department'],
         phone: user['phone'],
       );

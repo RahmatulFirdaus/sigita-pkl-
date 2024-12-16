@@ -24,13 +24,11 @@ class _UpdatepageState extends State<Updatepage> {
   String _selectedRole = "Perawat";
   bool _isPasswordVisible = false;
 
-  // Fetch existing account data
   Future<void> _fetchAccountData() async {
     try {
-      var account = await GetAccount.getAccountById(widget.id);
+      var account = await GetAccountAdminDetail.getAccountAdminDetail(widget.id);
       setState(() {
         _usernameController.text = account.username;
-        _passwordController.text = account.password;
         _phoneController.text = account.phone;
         _nameController.text = account.name;
         _departmentController.text = account.department;

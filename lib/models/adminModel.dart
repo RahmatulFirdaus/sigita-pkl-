@@ -2,6 +2,39 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class DeleteAccountAdmin{
+  String id;
+  DeleteAccountAdmin({required this.id});
+  static Future<DeleteAccountAdmin> deleteAccountAdmin(String id) async{
+    Uri url = Uri.parse("http://192.168.1.70:3000/api/deleteAkun/$id");
+    var hasilResponse = await http.delete(url);
+    var jsonData = jsonDecode(hasilResponse.body);
+    return DeleteAccountAdmin(id: jsonData['id'].toString());
+  }
+}
+
+class GetAccountAdminDetail{
+  String username, password, role, phone, name, department, id;
+
+  GetAccountAdminDetail({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department, required this.id});
+
+  static Future<GetAccountAdminDetail> getAccountAdminDetail(String id) async{
+    Uri url = Uri.parse("http://192.168.1.70:3000/api/getAccountAdminDetail/$id");
+    var hasilResponse = await http.get(url);
+    var jsonData = jsonDecode(hasilResponse.body);
+    var user = jsonData["data"][0];
+    return GetAccountAdminDetail(
+      id: user['id'].toString(),
+      username: user['username'].toString(),
+      password: user['password'].toString(),
+      role: user['role'].toString(),
+      phone: user['phone'].toString(),
+      name: user['nurse_name'].toString(),
+      department: user['department'].toString(),
+    );
+  }
+}
+
 class UpdateAccount{
   String username, password, role, phone, name, department;
 
@@ -62,9 +95,9 @@ class PostAccount{
 }
 
 class GetAccount{
-  String username, password, role, phone, name, department;
+  String username, password, role, phone, name, department, id;
 
-  GetAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department});
+  GetAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department, required this.id});
 
   static Future<List<GetAccount>> getAccount() async {
     Uri url = Uri.parse("http://192.168.1.70:3000/api/getAccountAdmin");
@@ -73,6 +106,7 @@ class GetAccount{
     var dataList = jsonData["data"] as List;
     return dataList.map((user) {
       return GetAccount(
+        id: user['id'].toString(),
         username: user['username'].toString(),
         password: user['password'].toString(),
         role: user['role'].toString(),
