@@ -193,10 +193,10 @@ class _AdminAccountPageState extends State<AdminAccountPage> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: EdgeInsets.only(left: 20, bottom: 16),
-              title: Text(
+              titlePadding: const EdgeInsets.only(left: 20, bottom: 16),
+              title: const Text(
                 'Account Management',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
@@ -236,7 +236,7 @@ class _AdminAccountPageState extends State<AdminAccountPage> {
                               shape: BoxShape.circle,
                               color: Colors.white.withOpacity(0.1),
                             ),
-                            padding: EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(20),
                             child: Icon(
                               Icons.account_circle_rounded,
                               size: 100,
@@ -260,7 +260,7 @@ class _AdminAccountPageState extends State<AdminAccountPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TambahAccount(),
+                      builder: (context) => TambahAkun(),
                     ),
                   );
                 },

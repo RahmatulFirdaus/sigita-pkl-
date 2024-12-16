@@ -2,6 +2,65 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class UpdateAccount{
+  String username, password, role, phone, name, department;
+
+  UpdateAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department});
+
+  static Future<UpdateAccount> updateAccount(String username, password, role, phone, name, department, id) async{
+    Uri url = Uri.parse("http://192.168.1.70:3000/api/updateAkun/$id");
+    var hasilResponse = await http.patch(url, 
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      "username": username, 
+      "password": password, 
+      "role": role, 
+      "phone": phone, 
+      "name": name, 
+      "department": department
+    }));
+    var jsonData = jsonDecode(hasilResponse.body);
+    return UpdateAccount(
+      username: jsonData['username'].toString(),
+      password: jsonData['password'].toString(),
+      role: jsonData['role'].toString(),
+      phone: jsonData['phone'].toString(),
+      name: jsonData['name'].toString(),
+      department: jsonData['department'].toString(),
+    );
+    }
+  }
+
+
+class PostAccount{
+  String username, password, role, phone, name, department;
+
+  PostAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department});
+
+  static Future<PostAccount> postAccount(String username, password, role, phone, name, department) async{
+    Uri url = Uri.parse("http://192.168.1.70:3000/api/postAkun");
+    var hasilResponse = await http.post(url, 
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      "username": username,
+      "password": password,
+      "role": role,
+      "phone": phone,
+      "name": name,
+      "department": department
+    }));
+    var jsonData = jsonDecode(hasilResponse.body);
+    return PostAccount(
+      username: jsonData['username'].toString(),
+      password: jsonData['password'].toString(),
+      role: jsonData['role'].toString(),
+      phone: jsonData['phone'].toString(),
+      name: jsonData['name'].toString(),
+      department: jsonData['department'].toString(),
+    );
+  }
+}
+
 class GetAccount{
   String username, password, role, phone, name, department;
 

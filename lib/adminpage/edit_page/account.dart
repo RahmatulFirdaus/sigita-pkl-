@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sigita_test/models/adminModel.dart';
 import 'package:toastification/toastification.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class TambahAkun extends StatefulWidget {
-  const TambahAkun({Key? key}) : super(key: key);
+class Updatepage extends StatefulWidget {
+  final String id; // Add an id parameter to fetch specific account data
+
+  const Updatepage({Key? key, required this.id}) : super(key: key);
 
   @override
-  _TambahAkunState createState() => _TambahAkunState();
+  _UpdatepageState createState() => _UpdatepageState();
 }
 
-class _TambahAkunState extends State<TambahAkun> {
+class _UpdatepageState extends State<Updatepage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -20,6 +23,39 @@ class _TambahAkunState extends State<TambahAkun> {
 
   String _selectedRole = "Perawat";
   bool _isPasswordVisible = false;
+
+  // Fetch existing account data
+  Future<void> _fetchAccountData() async {
+    try {
+      var account = await GetAccount.getAccountById(widget.id);
+      setState(() {
+        _usernameController.text = account.username;
+        _passwordController.text = account.password;
+        _phoneController.text = account.phone;
+        _nameController.text = account.name;
+        _departmentController.text = account.department;
+        _selectedRole = account.role;
+      });
+    } catch (e) {
+      // Handle any errors during fetch
+      toastification.show(
+        context: context,
+        title: const Text("Terjadi Kesalahan"),
+        description: const Text("Gagal mengambil data akun"),
+        type: ToastificationType.error,
+        style: ToastificationStyle.flat,
+        alignment: Alignment.topCenter,
+        autoCloseDuration: const Duration(seconds: 5),
+        icon: const Icon(Icons.error_outline),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAccountData();
+  }
 
   void _submitData() async {
     String username = _usernameController.text;
@@ -45,25 +81,27 @@ class _TambahAkunState extends State<TambahAkun> {
       );
       return;
     }
+
     try {
-      await PostAccount.postAccount(
-          username, password, _selectedRole, phone, name, department);
-    toastification.show(
+      await UpdateAccount.updateAccount(
+        username, password, _selectedRole, phone, name, department, widget.id);
+      
+      toastification.show(
         context: context,
         title: const Text("Berhasil"),
-        description: const Text("Akun telah berhasil ditambahkan"),
+        description: const Text("Akun berhasil diperbarui"),
         type: ToastificationType.success,
         style: ToastificationStyle.flat,
         alignment: Alignment.topCenter,
         autoCloseDuration: const Duration(seconds: 5),
         icon: const Icon(Icons.check_circle_outlined),
       );
-      Navigator.pop(context);
+      Navigator.pop(context);  // Close the edit screen after updating
     } catch (e) {
       toastification.show(
         context: context,
         title: const Text("Terjadi Kesalahan"),
-        description: const Text("Gagal menambahkan akun"),
+        description: const Text("Gagal memperbarui akun"),
         type: ToastificationType.error,
         style: ToastificationStyle.flat,
         alignment: Alignment.topCenter,
@@ -79,7 +117,7 @@ class _TambahAkunState extends State<TambahAkun> {
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         title: const Text(
-          "Tambah Akun",
+          "Edit Akun",
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         elevation: 0,
@@ -279,7 +317,7 @@ class _TambahAkunState extends State<TambahAkun> {
           ),
           elevation: 0,
         ),
-        child: const Text("Tambah Akun",
+        child: const Text("Perbarui Akun",
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
