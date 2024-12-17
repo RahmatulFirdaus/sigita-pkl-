@@ -66,6 +66,7 @@ class UpdatePasswordProfile {
 
 class GetUser {
   String id;
+  String userId;
   String name;
   String jabatan;
   String phone;
@@ -74,7 +75,8 @@ class GetUser {
     required this.name,
     required this.jabatan,
     required this.phone,
-    required this.id
+    required this.id,
+    required this.userId
   });
 
   static Future<GetUser> getUser() async {
@@ -89,6 +91,7 @@ class GetUser {
 
       return GetUser(
         id: user['id'].toString(),
+        userId: user['user_id'].toString(),
         name: user['name'].toString(),
         jabatan: user['jabatan'],
         phone: user['phone'],
