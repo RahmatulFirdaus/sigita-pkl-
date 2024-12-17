@@ -14,9 +14,9 @@ class DeleteAccountAdmin{
 }
 
 class GetAccountAdminDetail{
-  String username, password, role, phone, name, department, id;
+  String username, password, role, phone, name, jabatan, id;
 
-  GetAccountAdminDetail({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department, required this.id});
+  GetAccountAdminDetail({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.jabatan, required this.id});
 
   static Future<GetAccountAdminDetail> getAccountAdminDetail(String id) async{
     Uri url = Uri.parse("http://192.168.1.70:3000/api/getAccountAdminDetail/$id");
@@ -30,17 +30,17 @@ class GetAccountAdminDetail{
       role: user['role'].toString(),
       phone: user['phone'].toString(),
       name: user['nurse_name'].toString(),
-      department: user['department'].toString(),
+      jabatan: user['jabatan'].toString(),
     );
   }
 }
 
 class UpdateAccount{
-  String username, password, role, phone, name, department;
+  String username, password, role, phone, name, jabatan;
 
-  UpdateAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department});
+  UpdateAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.jabatan});
 
-  static Future<UpdateAccount> updateAccount(String username, password, role, phone, name, department, id) async{
+  static Future<UpdateAccount> updateAccount(String username, password, role, phone, name, jabatan, id) async{
     Uri url = Uri.parse("http://192.168.1.70:3000/api/updateAkun/$id");
     var hasilResponse = await http.patch(url, 
     headers: {'Content-Type': 'application/json'},
@@ -50,7 +50,7 @@ class UpdateAccount{
       "role": role, 
       "phone": phone, 
       "name": name, 
-      "department": department
+      "jabatan": jabatan
     }));
     var jsonData = jsonDecode(hasilResponse.body);
     return UpdateAccount(
@@ -59,18 +59,18 @@ class UpdateAccount{
       role: jsonData['role'].toString(),
       phone: jsonData['phone'].toString(),
       name: jsonData['name'].toString(),
-      department: jsonData['department'].toString(),
+      jabatan: jsonData['jabatan'].toString(),
     );
     }
   }
 
 
 class PostAccount{
-  String username, password, role, phone, name, department;
+  String username, password, role, phone, name, jabatan;
 
-  PostAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department});
+  PostAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.jabatan});
 
-  static Future<PostAccount> postAccount(String username, password, role, phone, name, department) async{
+  static Future<PostAccount> postAccount(String username, password, role, phone, name, jabatan) async{
     Uri url = Uri.parse("http://192.168.1.70:3000/api/postAkun");
     var hasilResponse = await http.post(url, 
     headers: {'Content-Type': 'application/json'},
@@ -80,7 +80,7 @@ class PostAccount{
       "role": role,
       "phone": phone,
       "name": name,
-      "department": department
+      "jabatan": jabatan
     }));
     var jsonData = jsonDecode(hasilResponse.body);
     return PostAccount(
@@ -89,15 +89,15 @@ class PostAccount{
       role: jsonData['role'].toString(),
       phone: jsonData['phone'].toString(),
       name: jsonData['name'].toString(),
-      department: jsonData['department'].toString(),
+      jabatan: jsonData['jabatan'].toString(),
     );
   }
 }
 
 class GetAccount{
-  String username, password, role, phone, name, department, id;
+  String username, password, role, phone, name, jabatan, id;
 
-  GetAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.department, required this.id});
+  GetAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.jabatan, required this.id});
 
   static Future<List<GetAccount>> getAccount() async {
     Uri url = Uri.parse("http://192.168.1.70:3000/api/getAccountAdmin");
@@ -112,7 +112,7 @@ class GetAccount{
         role: user['role'].toString(),
         phone: user['phone'].toString(),
         name: user['nurse_name'].toString(),
-        department: user['department'].toString(),
+        jabatan: user['jabatan'].toString(),
       );
     }).toList();
   }

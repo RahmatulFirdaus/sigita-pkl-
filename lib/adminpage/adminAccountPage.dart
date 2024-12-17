@@ -443,7 +443,7 @@ class MyDataSource extends DataTableSource {
         DataCell(Text(account.role)),
         DataCell(Text(account.phone)),
         DataCell(Text(account.name)),
-        DataCell(Text(account.department)),
+        DataCell(Text(account.jabatan)),
         DataCell(
           Row(
             mainAxisSize: MainAxisSize.min,

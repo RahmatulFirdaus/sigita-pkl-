@@ -16,7 +16,7 @@
     final TextEditingController _passwordController = TextEditingController();
     final TextEditingController _phoneController = TextEditingController();
     final TextEditingController _nameController = TextEditingController();
-    final TextEditingController _departmentController = TextEditingController();
+    final TextEditingController _jabatanController = TextEditingController();
 
     String _selectedRole = "Perawat";
     bool _isPasswordVisible = false;
@@ -26,13 +26,13 @@
       String password = _passwordController.text;
       String phone = _phoneController.text;
       String name = _nameController.text;
-      String department = _departmentController.text;
+      String jabatan = _jabatanController.text;
 
       if (username.isEmpty ||
           password.isEmpty ||
           phone.isEmpty ||
           name.isEmpty ||
-          department.isEmpty) {
+          jabatan.isEmpty) {
         toastification.show(
           context: context,
           title: const Text("Terjadi Kesalahan"),
@@ -47,7 +47,7 @@
       }
       try {
         await PostAccount.postAccount(
-            username, password, _selectedRole, phone, name, department);
+            username, password, _selectedRole, phone, name, jabatan);
       toastification.show(
           context: context,
           title: const Text("Berhasil"),
@@ -133,8 +133,8 @@
                   ),
                   const SizedBox(height: 16),
                   _buildTextField(
-                    controller: _departmentController,
-                    labelText: "Department",
+                    controller: _jabatanController,
+                    labelText: "jabatan",
                     prefixIcon: Icons.account_balance_outlined,
                   ),
                   const SizedBox(height: 20),

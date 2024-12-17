@@ -4,15 +4,77 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const storage = FlutterSecureStorage();
 
+class UpdateNameProfile{
+ Future<String?> updateName(String id, name) async {
+   var url = Uri.parse("http://192.168.1.70:3000/api/updateName/$id");
+   var hasilResponse = await http.patch(url,
+   headers: {'Content-Type': 'application/json'},
+   body: jsonEncode({
+     "name": name
+   })
+   );
+   var jsonData = jsonDecode(hasilResponse.body);
+   return jsonData['pesan'].toString();
+ } 
+}
+
+class UpdatePhoneProfile {
+  Future<String?> updatePhone(String id, String phone) async {
+    var url = Uri.parse("http://192.168.1.70:3000/api/updatePhone/$id");
+    var hasilResponse = await http.patch(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "phone": phone,
+      }),
+    );
+    var jsonData = jsonDecode(hasilResponse.body);
+    return jsonData['pesan'].toString();
+  }
+}
+
+class UpdateJabatanProfile {
+  Future<String?> updateJabatan(String id, String jabatan) async {
+    var url = Uri.parse("http://192.168.1.70:3000/api/updateJabatan/$id");
+    var hasilResponse = await http.patch(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "jabatan": jabatan,
+      }),
+    );
+    var jsonData = jsonDecode(hasilResponse.body);
+    return jsonData['pesan'].toString();
+  }
+}
+
+class UpdatePasswordProfile {
+  Future<String?> updatePassword(String id, String password) async {
+    var url = Uri.parse("http://192.168.1.70:3000/api/updatePassword/$id");
+    var hasilResponse = await http.patch(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "password": password,
+      }),
+    );
+    var jsonData = jsonDecode(hasilResponse.body);
+    return jsonData['pesan'].toString();
+  }
+}
+
+
 class GetUser {
+  String id;
   String name;
-  String department;
+  String jabatan;
   String phone;
 
   GetUser({
     required this.name,
-    required this.department,
+    required this.jabatan,
     required this.phone,
+    required this.id
   });
 
   static Future<GetUser> getUser() async {
@@ -26,8 +88,9 @@ class GetUser {
       var user = jsonData["data"][0]; // Ambil data user pertama
 
       return GetUser(
+        id: user['id'].toString(),
         name: user['name'].toString(),
-        department: user['department'],
+        jabatan: user['jabatan'],
         phone: user['phone'],
       );
     } else {

@@ -13,46 +13,67 @@ class Profilepage extends StatefulWidget {
 class _ProfilepageState extends State<Profilepage> {
   // Controllers for edit fields
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _departmentController = TextEditingController();
+  final TextEditingController _jabatanController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   // Function to show update dialog
-  void _showUpdateDialog(String field, TextEditingController controller) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Update $field'),
-          content: TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              hintText: 'Enter new $field',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+  void _showUpdateDialog(String userId,String field, TextEditingController controller) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Update $field'),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: 'Enter new $field',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // TODO: Implement update logic for each field
-                // Example: 
-                // updateUserField(field, controller.text);
-                Navigator.of(context).pop();
-                setState(() {}); // Refresh the UI
-              },
-              child: const Text('Update'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              String? responseMessage;
+              if (field == 'Name') {
+                responseMessage =
+                    await UpdateNameProfile().updateName(userId, controller.text);
+              } else if (field == 'Phone') {
+                responseMessage =
+                    await UpdatePhoneProfile().updatePhone(userId, controller.text);
+              } else if (field == 'jabatan') {
+                responseMessage = await UpdateJabatanProfile()
+                    .updateJabatan(userId, controller.text);
+              } else if (field == 'Password') {
+                responseMessage = await UpdatePasswordProfile()
+                    .updatePassword(userId, controller.text);
+              }
+
+              Navigator.of(context).pop(); // Tutup dialog
+
+              if (responseMessage != null) {
+                // Tampilkan pesan dari server
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(responseMessage)),
+                );
+
+                setState(() {}); // Refresh UI
+              }
+            },
+            child: const Text('Update'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +82,7 @@ class _ProfilepageState extends State<Profilepage> {
       drawer: const Drawernavigasi(),
       body: FutureBuilder<GetUser>(
         future: GetUser.getUser(),
-        builder: (context, snapshot) {
+        builder: (context, snapshot, ) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
@@ -95,25 +116,25 @@ class _ProfilepageState extends State<Profilepage> {
                         icon: Icons.person,
                         title: 'Name',
                         value: user.name,
-                        onEdit: () => _showUpdateDialog('Name', _nameController),
+                        onEdit: () => _showUpdateDialog(user.id,'Name', _nameController),
                       ),
                       _buildProfileInfoCard(
                         icon: Icons.work,
-                        title: 'Department',
-                        value: user.department,
-                        onEdit: () => _showUpdateDialog('Department', _departmentController),
+                        title: 'jabatan',
+                        value: user.jabatan,
+                        onEdit: () => _showUpdateDialog(user.id,'jabatan', _jabatanController),
                       ),
                       _buildProfileInfoCard(
                         icon: Icons.phone,
                         title: 'Phone',
                         value: user.phone,
-                        onEdit: () => _showUpdateDialog('Phone', _phoneController),
+                        onEdit: () => _showUpdateDialog(user.id,'Phone', _phoneController),
                       ),
                       _buildProfileInfoCard(
                         icon: Icons.lock,
                         title: 'Password',
                         value: '********',
-                        onEdit: () => _showUpdateDialog('Password', _passwordController),
+                        onEdit: () => _showUpdateDialog(user.id,'Password', _passwordController),
                       ),
                     ],
                   ),
