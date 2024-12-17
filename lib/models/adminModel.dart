@@ -2,10 +2,28 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class GetViewKomentar{
-  String  email, komentar, tanggal;
+class GetViewDownload{
+  String nama;
 
-  GetViewKomentar({required this.email, required this.komentar, required this.tanggal});
+  GetViewDownload({required this.nama});
+
+  Future<List<GetViewDownload>> getViewDownload(String id) async{
+    var url = Uri.parse("http://192.168.1.70:3000/api/getViewDownload/$id");
+    var hasilResponse = await http.get(url);
+    var jsonData = jsonDecode(hasilResponse.body);
+    var dataList = jsonData["data"] as List;
+    return dataList.map((user) {
+      return GetViewDownload(
+        nama: user['nama'].toString(),
+      );  
+    }).toList();
+  }
+}
+
+class GetViewKomentar{
+  String  nama, komentar, tanggal;
+
+  GetViewKomentar({required this.nama, required this.komentar, required this.tanggal});
 
   Future<List<GetViewKomentar>> getViewKomentar(String id) async{
     Uri url = Uri.parse("http://192.168.1.70:3000/api/getViewKomentar/$id");
@@ -14,7 +32,7 @@ class GetViewKomentar{
     var dataList = jsonData["data"] as List;
     return dataList.map((user) {
       return GetViewKomentar(
-        email: user['email'].toString(),
+        nama: user['nama'].toString(),
         komentar: user['komentar'].toString(),
         tanggal: user['tanggal'].toString(),
       );
@@ -34,9 +52,9 @@ class DeleteAccountAdmin{
 }
 
 class GetAccountAdminDetail{
-  String username, password, role, phone, name, jabatan, id;
+  String username, password, role, phone, nama, jabatan, id;
 
-  GetAccountAdminDetail({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.jabatan, required this.id});
+  GetAccountAdminDetail({required this.username, required this.password, required this.role, required this.phone, required this.nama, required this.jabatan, required this.id});
 
   static Future<GetAccountAdminDetail> getAccountAdminDetail(String id) async{
     Uri url = Uri.parse("http://192.168.1.70:3000/api/getAccountAdminDetail/$id");
@@ -49,18 +67,18 @@ class GetAccountAdminDetail{
       password: user['password'].toString(),
       role: user['role'].toString(),
       phone: user['phone'].toString(),
-      name: user['nurse_name'].toString(),
+      nama: user['identitas_nama'].toString(),
       jabatan: user['jabatan'].toString(),
     );
   }
 }
 
 class UpdateAccount{
-  String username, password, role, phone, name, jabatan;
+  String username, password, role, phone, nama, jabatan;
 
-  UpdateAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.jabatan});
+  UpdateAccount({required this.username, required this.password, required this.role, required this.phone, required this.nama, required this.jabatan});
 
-  static Future<UpdateAccount> updateAccount(String username, password, role, phone, name, jabatan, id) async{
+  static Future<UpdateAccount> updateAccount(String username, password, role, phone, nama, jabatan, id) async{
     Uri url = Uri.parse("http://192.168.1.70:3000/api/updateAkun/$id");
     var hasilResponse = await http.patch(url, 
     headers: {'Content-Type': 'application/json'},
@@ -69,7 +87,7 @@ class UpdateAccount{
       "password": password, 
       "role": role, 
       "phone": phone, 
-      "name": name, 
+      "nama": nama, 
       "jabatan": jabatan
     }));
     var jsonData = jsonDecode(hasilResponse.body);
@@ -78,7 +96,7 @@ class UpdateAccount{
       password: jsonData['password'].toString(),
       role: jsonData['role'].toString(),
       phone: jsonData['phone'].toString(),
-      name: jsonData['name'].toString(),
+      nama: jsonData['nama'].toString(),
       jabatan: jsonData['jabatan'].toString(),
     );
     }
@@ -86,11 +104,11 @@ class UpdateAccount{
 
 
 class PostAccount{
-  String username, password, role, phone, name, jabatan;
+  String username, password, role, phone, nama, jabatan;
 
-  PostAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.jabatan});
+  PostAccount({required this.username, required this.password, required this.role, required this.phone, required this.nama, required this.jabatan});
 
-  static Future<PostAccount> postAccount(String username, password, role, phone, name, jabatan) async{
+  static Future<PostAccount> postAccount(String username, password, role, phone, nama, jabatan) async{
     Uri url = Uri.parse("http://192.168.1.70:3000/api/postAkun");
     var hasilResponse = await http.post(url, 
     headers: {'Content-Type': 'application/json'},
@@ -99,7 +117,7 @@ class PostAccount{
       "password": password,
       "role": role,
       "phone": phone,
-      "name": name,
+      "nama": nama,
       "jabatan": jabatan
     }));
     var jsonData = jsonDecode(hasilResponse.body);
@@ -108,16 +126,16 @@ class PostAccount{
       password: jsonData['password'].toString(),
       role: jsonData['role'].toString(),
       phone: jsonData['phone'].toString(),
-      name: jsonData['name'].toString(),
+      nama: jsonData['nama'].toString(),
       jabatan: jsonData['jabatan'].toString(),
     );
   }
 }
 
 class GetAccount{
-  String username, password, role, phone, name, jabatan, id;
+  String username, password, role, phone, nama, jabatan, id;
 
-  GetAccount({required this.username, required this.password, required this.role, required this.phone, required this.name, required this.jabatan, required this.id});
+  GetAccount({required this.username, required this.password, required this.role, required this.phone, required this.nama, required this.jabatan, required this.id});
 
   static Future<List<GetAccount>> getAccount() async {
     Uri url = Uri.parse("http://192.168.1.70:3000/api/getAccountAdmin");
@@ -131,7 +149,7 @@ class GetAccount{
         password: user['password'].toString(),
         role: user['role'].toString(),
         phone: user['phone'].toString(),
-        name: user['nurse_name'].toString(),
+        nama: user['identitas_nama'].toString(),
         jabatan: user['jabatan'].toString(),
       );
     }).toList();
@@ -167,7 +185,7 @@ class GetTotalPostingan {
     var dataList = jsonData["data"] as List;
     return dataList.map((user) {
       return GetTotalPostingan(
-        judul: user['table_name'],
+        judul: user['table_nama'],
         jumlah: user['total'].toString(),
       );
     }).toList();

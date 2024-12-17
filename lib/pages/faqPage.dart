@@ -55,7 +55,7 @@ class Faqpage extends StatelessWidget {
               title:
                   'Bagaimana cara mendapatkan bantuan jika mengalami kesulitan?',
               description:
-                  "Jika Anda mengalami kesulitan atau memiliki pertanyaan, Anda bisa menghubungi tim dukungan kami melalui fitur kontak di situs web atau melalui email.",
+                  "Jika Anda mengalami kesulitan atau memiliki pertanyaan, Anda bisa menghubungi tim dukungan kami melalui fitur kontak di situs web atau melalui nama.",
             ),
             _buildFAQCard(
               context,

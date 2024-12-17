@@ -14,9 +14,9 @@ class PageProposal extends StatefulWidget {
 }
 
 class _PageProposalState extends State<PageProposal> {
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
-  final TextEditingController _downloadEmailController =
+  final TextEditingController _downloadnamaController =
       TextEditingController();
 
   GetSigita dataRespon = GetSigita(
@@ -54,15 +54,15 @@ class _PageProposalState extends State<PageProposal> {
   }
 
   void _submitComment() async {
-    if (_emailController.text.isEmpty || _commentController.text.isEmpty) {
+    if (_namaController.text.isEmpty || _commentController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Email dan Komentar harus diisi")),
+        const SnackBar(content: Text("nama dan Komentar harus diisi")),
       );
       return;
     }
 
     await PostSigita.postSigita(
-        dataRespon.id, _emailController.text, _commentController.text);
+        dataRespon.id, _namaController.text, _commentController.text);
 
     FocusScope.of(context).unfocus();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -70,22 +70,22 @@ class _PageProposalState extends State<PageProposal> {
     );
 
     // Optional: Clear text fields after submission
-    _emailController.clear();
+    _namaController.clear();
     _commentController.clear();
   }
 
   void _downloadPDF() async {
-    if (_downloadEmailController.text.isEmpty) {
+    if (_downloadnamaController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           duration: Duration(seconds: 1),
-          content: Text("Email Tidak Boleh Kosong"),
+          content: Text("nama Tidak Boleh Kosong"),
         ),
       );
       return;
     }
 
-    await PermissionFile.postDownload(widget.id, _downloadEmailController.text);
+    await PermissionFile.postDownload(widget.id, _downloadnamaController.text);
     launchUrl(Uri.parse(dataFile.pdf));
   }
 
@@ -203,10 +203,10 @@ class _PageProposalState extends State<PageProposal> {
               child: Column(
                 children: [
                   TextField(
-                    controller: _emailController,
+                    controller: _namaController,
                     decoration: InputDecoration(
-                      labelText: 'Email',
-                      prefixIcon: const Icon(Icons.email),
+                      labelText: 'nama',
+                      prefixIcon: const Icon(Icons.person),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -254,7 +254,7 @@ class _PageProposalState extends State<PageProposal> {
                   child: Icon(Icons.person),
                 ),
                 title: Text(
-                  comment.email ?? 'Anonim',
+                  comment.nama ?? 'Anonim',
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 subtitle: Text(comment.komentar ?? ''),
@@ -303,9 +303,9 @@ class _PageProposalState extends State<PageProposal> {
                         builder: (context) => AlertDialog(
                           title: const Text('Download PDF'),
                           content: TextField(
-                            controller: _downloadEmailController,
+                            controller: _downloadnamaController,
                             decoration: InputDecoration(
-                              labelText: 'Email',
+                              labelText: 'nama',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),

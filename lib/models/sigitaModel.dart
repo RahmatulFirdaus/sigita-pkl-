@@ -5,12 +5,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 const storage = FlutterSecureStorage();
 
 class UpdateNameProfile{
- Future<String?> updateName(String id, name) async {
-   var url = Uri.parse("http://192.168.1.70:3000/api/updateName/$id");
+ Future<String?> updateName(String id, nama) async {
+   var url = Uri.parse("http://192.168.1.70:3000/api/updatenama/$id");
    var hasilResponse = await http.patch(url,
    headers: {'Content-Type': 'application/json'},
    body: jsonEncode({
-     "name": name
+     "nama": nama
    })
    );
    var jsonData = jsonDecode(hasilResponse.body);
@@ -67,12 +67,12 @@ class UpdatePasswordProfile {
 class GetUser {
   String id;
   String userId;
-  String name;
+  String nama;
   String jabatan;
   String phone;
 
   GetUser({
-    required this.name,
+    required this.nama,
     required this.jabatan,
     required this.phone,
     required this.id,
@@ -80,7 +80,7 @@ class GetUser {
   });
 
   static Future<GetUser> getUser() async {
-    var url = Uri.parse("http://192.168.1.70:3000/api/nurse");
+    var url = Uri.parse("http://192.168.1.70:3000/api/identitas");
     var hasilResponse = await http.get(url,
         headers: {'Authorization': 'Bearer ${await storage.read(key: 'token')}'});
     
@@ -92,7 +92,7 @@ class GetUser {
       return GetUser(
         id: user['id'].toString(),
         userId: user['user_id'].toString(),
-        name: user['name'].toString(),
+        nama: user['nama'].toString(),
         jabatan: user['jabatan'],
         phone: user['phone'],
       );
@@ -186,29 +186,29 @@ class GetSigita {
 
 class PostSigita {
   String idPostingan;
-  String email, komentar;
+  String nama, komentar;
 
   PostSigita({
     required this.idPostingan,
-    required this.email,
+    required this.nama,
     required this.komentar,
   });
 
   static Future<PostSigita> postSigita(
-      String idPostingan, String email, String komentar) async {
+      String idPostingan, String nama, String komentar) async {
     Uri url = Uri.parse("http://192.168.1.70:3000/api/simpanKomentar");
     var hasilResponse = await http.post(
       url,
       body: {
         "id_postingan": idPostingan,
-        "email": email,
+        "nama": nama,
         "komentar": komentar,
       },
     );
     var jsonData = jsonDecode(hasilResponse.body);
     return PostSigita(
       idPostingan: jsonData['id_postingan'].toString(),
-      email: jsonData['email'].toString(),
+      nama: jsonData['nama'].toString(),
       komentar: jsonData['komentar'].toString(),
     );
   }
@@ -229,27 +229,27 @@ class GetFile {
 }
 
 class PermissionFile {
-  String idPostingan, email;
+  String idPostingan, nama;
 
   PermissionFile({
     required this.idPostingan,
-    required this.email,
+    required this.nama,
   });
 
   static Future<PermissionFile> postDownload(
-      String idPostingan, String email) async {
+      String idPostingan, String nama) async {
     Uri url = Uri.parse("http://192.168.1.70:3000/api/downloadModul");
     var hasilResponse = await http.post(
       url,
       body: {
         "id_postingan": idPostingan,
-        "email": email,
+        "nama": nama,
       },
     );
     var jsonData = jsonDecode(hasilResponse.body);
     return PermissionFile(
       idPostingan: jsonData['id_postingan'].toString(),
-      email: jsonData['email'].toString(),
+      nama: jsonData['nama'].toString(),
     );
   }
 }
@@ -274,11 +274,11 @@ class GetKategori {
 }
 
 class GetKomentar {
-  String idPostingan, email, komentar, tanggal;
+  String idPostingan, nama, komentar, tanggal;
 
   GetKomentar({
     required this.idPostingan,
-    required this.email,
+    required this.nama,
     required this.komentar,
     required this.tanggal,
   });
@@ -291,7 +291,7 @@ class GetKomentar {
     return dataList.map((user) {
       return GetKomentar(
         idPostingan: user['id_postingan'].toString(),
-        email: user['email'],
+        nama: user['nama'],
         komentar: user['komentar'],
         tanggal: user['tanggal'],
       );

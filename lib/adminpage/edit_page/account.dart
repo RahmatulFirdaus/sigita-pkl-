@@ -28,7 +28,7 @@ class _UpdatepageState extends State<Updatepage> {
       setState(() {
         _usernameController.text = account.username;
         _phoneController.text = account.phone;
-        _nameController.text = account.name;
+        _nameController.text = account.nama;
         _jabatanController.text = account.jabatan;
         _selectedRole = account.role;
       });

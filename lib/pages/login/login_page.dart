@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                               labelText: "Username",
                               labelStyle: const TextStyle(fontSize: 14),
                               prefixIcon:
-                                  const Icon(Icons.email_outlined, size: 20),
+                                  const Icon(Icons.nama_outlined, size: 20),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: BorderSide.none,

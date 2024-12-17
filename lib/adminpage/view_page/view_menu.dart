@@ -6,9 +6,9 @@ import 'package:sigita_test/adminpage/view_page/view_download.dart';
 import 'package:sigita_test/adminpage/view_page/view_postingan.dart';
 
 class ViewMenu extends StatelessWidget {
-  final String postId;
+  final String postId, judul;
 
-  const ViewMenu({Key? key, required this.postId}) : super(key: key);
+  const ViewMenu({Key? key, required this.postId, required this.judul}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class ViewMenu extends StatelessWidget {
                   // Header
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -110,7 +110,7 @@ class ViewMenu extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ViewPostinganPage(id: postId),
+                                  builder: (context) => ViewPostinganPage(id: postId, judul: judul,),
                                 ),
                               );
                             },

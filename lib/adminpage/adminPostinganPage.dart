@@ -479,7 +479,7 @@ class MyDataSource extends DataTableSource {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ViewMenu(postId: postingan.id),
+                      builder: (context) => ViewMenu(postId: postingan.id, judul: postingan.title,),
                     ),
                   );
                 },

@@ -442,7 +442,7 @@ class MyDataSource extends DataTableSource {
         DataCell(Text(account.password)),
         DataCell(Text(account.role)),
         DataCell(Text(account.phone)),
-        DataCell(Text(account.name)),
+        DataCell(Text(account.nama)),
         DataCell(Text(account.jabatan)),
         DataCell(
           Row(

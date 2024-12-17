@@ -115,7 +115,7 @@ class _ProfilepageState extends State<Profilepage> {
                       _buildProfileInfoCard(
                         icon: Icons.person,
                         title: 'Name',
-                        value: user.name,
+                        value: user.nama,
                         onEdit: () => _showUpdateDialog(user.userId,'Name', _nameController),
                       ),
                       _buildProfileInfoCard(
