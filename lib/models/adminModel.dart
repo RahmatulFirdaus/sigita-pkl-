@@ -2,6 +2,26 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class GetViewKomentar{
+  String  email, komentar, tanggal;
+
+  GetViewKomentar({required this.email, required this.komentar, required this.tanggal});
+
+  Future<List<GetViewKomentar>> getViewKomentar(String id) async{
+    Uri url = Uri.parse("http://192.168.1.70:3000/api/getViewKomentar/$id");
+    var hasilResponse = await http.get(url);
+    var jsonData = jsonDecode(hasilResponse.body);
+    var dataList = jsonData["data"] as List;
+    return dataList.map((user) {
+      return GetViewKomentar(
+        email: user['email'].toString(),
+        komentar: user['komentar'].toString(),
+        tanggal: user['tanggal'].toString(),
+      );
+    }).toList();
+  }
+}
+
 class DeleteAccountAdmin{
   String id;
   DeleteAccountAdmin({required this.id});
